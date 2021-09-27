@@ -28,6 +28,7 @@ def main():
     PORT = 1026
     serverIsRunning = True
     clientsIP = []
+    clientsNickNames = []
 
     serverSocket.bind( (IPserver,PORT) )
     serverSocket.listen(maxConnections)
@@ -38,6 +39,13 @@ def main():
         clientSock,clientAddr = serverSocket.accept()
         print(f"Client with the ip {clientAddr} has connected to the server !!!")
         clientsIP.append(clientSock)
+        
+        clientSock.send("Nickname-ul tau este : ".encode("utf-8"))
+        nickName = clientSock.recv(1024).decode("utf-8")
+
+        clientsNickNames.append(nickName)
+        
+        broadcast(f" {nickName} a intrat pe chat. Bun venit !!! ", clientsIP, clientSock)
 
         thread = threading.Thread(target=handleClient, args=(clientSock, clientsIP))
         thread.start()

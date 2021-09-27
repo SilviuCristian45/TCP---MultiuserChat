@@ -1,15 +1,21 @@
 import socket
 import threading
 
+nickNameBros = ""
 
 def receiveMessages(client):
+    global nickNameBros
     while True:
         messageReceived = client.recv(1024).decode("utf-8")
-        print(messageReceived)
+        if messageReceived == "Nickname-ul tau este : ": 
+            nickNameBros = input(messageReceived)
+            client.send(nickNameBros.encode("utf-8"))
+        else :
+            print(messageReceived)
 
 def sendMessages(client):
     while True:
-        message = input("your message = \n")
+        message = nickNameBros + " : " + input("your message = \n")
         client.send(message.encode("utf-8"))
 
 def main():
