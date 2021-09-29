@@ -12,7 +12,7 @@ def broadcast(message, otherClients, sender):
         
 
 #input : clientSock - socket - the client's socket which is used to receive data from that particular user 
-def handleClient(clientSock, clients):
+def handleClient(clientSock, clients):  
     while True:
         try:
             message = clientSock.recv(1024).decode("utf-8")
